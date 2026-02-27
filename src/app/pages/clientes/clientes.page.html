@@ -1,0 +1,85 @@
+<app-layout-topbar></app-layout-topbar>
+
+<section class="clientes-container">
+  <div class="clientes-content">
+    <aside class="modules-menu" aria-label="Módulos disponíveis">
+      <app-layout-menu></app-layout-menu>
+    </aside>
+
+    <div class="main-content">
+      <p-toolbar>
+        <ng-template pTemplate="start">
+          <h2 class="title">Gestão de clientes</h2>
+        </ng-template>
+        <ng-template pTemplate="end">
+          <button
+            pButton
+            type="button"
+            label="Voltar"
+            icon="pi pi-arrow-left"
+            severity="secondary"
+            (click)="voltarDashboard()"
+          ></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-card>
+        <ng-template pTemplate="title">Evolução de clientes (linha acumulada por mês)</ng-template>
+        <div class="chart-wrapper">
+          <p-chart
+            type="line"
+            [data]="clientesPorMes"
+            [options]="clientesPorMesOptions"
+            ariaLabel="Gráfico de linha da evolução da quantidade de clientes por mês"
+          ></p-chart>
+        </div>
+      </p-card>
+
+      <p-card>
+        <div class="search">
+          <span class="p-input-icon-left w-full">
+            <i class="pi pi-search"></i>
+            <input
+              pInputText
+              type="text"
+              [value]="filtro()"
+              (input)="atualizarFiltro($any($event.target).value)"
+              placeholder="Buscar por nome, e-mail ou telefone"
+              aria-label="Buscar clientes"
+              class="w-full"
+            />
+          </span>
+        </div>
+
+        <p-table [value]="clientesFiltrados" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Telefone</th>
+              <th>Status</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-cliente>
+            <tr>
+              <td>{{ cliente.nome }}</td>
+              <td>{{ cliente.email }}</td>
+              <td>{{ cliente.telefone }}</td>
+              <td>
+                <p-tag
+                  [value]="cliente.status"
+                  [severity]="cliente.status === 'Ativo' ? 'success' : 'contrast'"
+                ></p-tag>
+              </td>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="4" class="empty">Nenhum cliente encontrado.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+  </div>
+</section>

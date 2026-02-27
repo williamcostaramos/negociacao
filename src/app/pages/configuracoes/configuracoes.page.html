@@ -1,0 +1,83 @@
+<app-layout-topbar></app-layout-topbar>
+
+<section class="configuracoes-container">
+  <div class="configuracoes-content">
+    <aside class="modules-menu" aria-label="Módulos disponíveis">
+      <app-layout-menu></app-layout-menu>
+    </aside>
+
+    <div class="main-content">
+      <p-toolbar>
+        <ng-template pTemplate="start">
+          <h2 class="title">Configurações da aplicação</h2>
+        </ng-template>
+        <ng-template pTemplate="end">
+          <button
+            pButton
+            type="button"
+            label="Voltar"
+            icon="pi pi-arrow-left"
+            severity="secondary"
+            (click)="voltarDashboard()"
+          ></button>
+        </ng-template>
+      </p-toolbar>
+
+      <p-card>
+        <form [formGroup]="form" (ngSubmit)="salvar()" class="config-form" novalidate>
+          <div class="field">
+            <label for="nomeEmpresa">Nome da empresa</label>
+            <input id="nomeEmpresa" pInputText type="text" formControlName="nomeEmpresa" />
+            @if (nomeEmpresaInvalido) {
+              <small class="error">Informe um nome com pelo menos 2 caracteres.</small>
+            }
+          </div>
+
+          <div class="field">
+            <label for="emailSuporte">E-mail de suporte</label>
+            <input id="emailSuporte" pInputText type="email" formControlName="emailSuporte" />
+            @if (emailSuporteInvalido) {
+              <small class="error">Digite um e-mail válido para suporte.</small>
+            }
+          </div>
+
+          <div class="field">
+            <label for="idiomaPadrao">Idioma padrão</label>
+            <input id="idiomaPadrao" pInputText type="text" formControlName="idiomaPadrao" />
+          </div>
+
+          <div class="field">
+            <label for="moedaPadrao">Moeda padrão</label>
+            <input id="moedaPadrao" pInputText type="text" formControlName="moedaPadrao" />
+          </div>
+
+          <div class="field">
+            <label for="temaSistema">Tema do sistema</label>
+            <select
+              id="temaSistema"
+              class="p-inputtext p-component"
+              formControlName="temaSistema"
+              #temaSelect
+              (change)="atualizarTema(temaSelect.value)"
+              aria-label="Selecionar tema do sistema"
+            >
+              @for (modo of modosTema; track modo.value) {
+                <option [value]="modo.value">{{ modo.label }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="actions">
+            <button pButton type="submit" label="Salvar configurações" icon="pi pi-save"></button>
+          </div>
+        </form>
+      </p-card>
+
+      @if (salvoComSucesso()) {
+        <p-card>
+          <p class="success-message" role="status">Configurações salvas com sucesso.</p>
+        </p-card>
+      }
+    </div>
+  </div>
+</section>

@@ -1,0 +1,43 @@
+<button
+  pButton
+  type="button"
+  class="mobile-menu-button"
+  icon="pi pi-bars"
+  label="Menu"
+  severity="secondary"
+  (click)="toggleMobileMenu()"
+  aria-label="Abrir menu de navegação"
+></button>
+
+<nav class="layout-menu" [class.menu-open]="mobileMenuOpen()" aria-label="Menu principal da aplicação">
+  @for (section of sections; track section.label) {
+    <section class="section">
+      <h3 class="section-title">{{ section.label }}</h3>
+
+      <ul class="menu-list" role="list">
+        @for (item of section.items; track item.route) {
+          <li>
+            <button
+              type="button"
+              class="menu-item"
+              [class.active]="isActive(item.route)"
+              (click)="navigate(item.route)"
+            >
+              <i [class]="item.icon" aria-hidden="true"></i>
+              <span class="menu-item-label">{{ item.label }}</span>
+            </button>
+          </li>
+        }
+      </ul>
+    </section>
+  }
+</nav>
+
+@if (mobileMenuOpen()) {
+  <button
+    type="button"
+    class="menu-backdrop"
+    (click)="closeMobileMenu()"
+    aria-label="Fechar menu"
+  ></button>
+}

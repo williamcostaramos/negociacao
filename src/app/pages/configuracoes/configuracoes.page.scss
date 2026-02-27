@@ -1,0 +1,63 @@
+.configuracoes-container {
+  padding: 1rem;
+}
+
+.configuracoes-content {
+  display: grid;
+  grid-template-columns: 18rem 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.modules-menu {
+  position: sticky;
+  top: 1rem;
+}
+
+.main-content {
+  display: grid;
+  gap: 1rem;
+}
+
+.title {
+  margin: 0;
+}
+
+.config-form {
+  display: grid;
+  gap: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.field select {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.error {
+  color: var(--p-red-500);
+}
+
+.success-message {
+  margin: 0;
+  color: var(--p-green-600);
+  font-weight: 600;
+}
+
+@media (max-width: 960px) {
+  .configuracoes-content {
+    grid-template-columns: 1fr;
+  }
+
+  .modules-menu {
+    position: static;
+  }
+}

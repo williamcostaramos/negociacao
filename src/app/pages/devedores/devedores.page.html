@@ -1,0 +1,91 @@
+<app-layout-topbar></app-layout-topbar>
+
+<section class="devedores-container">
+  <div class="devedores-content">
+    <aside class="modules-menu" aria-label="Módulos disponíveis">
+      <app-layout-menu></app-layout-menu>
+    </aside>
+
+    <div class="main-content">
+      <p-toolbar>
+        <ng-template pTemplate="start">
+          <h2 class="title">Devedores</h2>
+        </ng-template>
+        <ng-template pTemplate="end">
+          <button
+            pButton
+            type="button"
+            label="Voltar"
+            icon="pi pi-arrow-left"
+            severity="secondary"
+            (click)="voltarDashboard()"
+          ></button>
+        </ng-template>
+      </p-toolbar>
+
+      <div class="cards">
+        <p-card>
+          <ng-template pTemplate="title">Total de devedores</ng-template>
+          <p class="metric">{{ totalRegistros() }}</p>
+        </p-card>
+
+        <p-card>
+          <ng-template pTemplate="title">Total em atraso</ng-template>
+          <p class="metric">{{ totalEmAtraso() | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
+        </p-card>
+         <p-card>
+          <ng-template pTemplate="title">Total</ng-template>
+          <p class="metric">{{ totalMontante() | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</p>
+        </p-card>
+      </div>
+
+      <p-card>
+        <div class="search">
+          <span class="p-input-icon-left w-full">
+            <i class="pi pi-search"></i>
+            <input
+              #filtroInput
+              pInputText
+              type="text"
+              [value]="filtro()"
+              (input)="atualizarFiltro(filtroInput.value)"
+              placeholder="Buscar por nome, documento ou status"
+              aria-label="Buscar devedores"
+              class="w-full"
+            />
+          </span>
+        </div>
+
+        <p-table [value]="devedoresFiltrados()" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Nome</th>
+              <th>Documento</th>
+              <th>Valor</th>
+              <th>Vencimento</th>
+              <th>Status</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-devedor>
+            <tr>
+              <td>{{ devedor.nome }}</td>
+              <td>{{ devedor.documento }}</td>
+              <td>{{ devedor.valor | currency: 'BRL' : 'symbol' : '1.2-2' : 'pt-BR' }}</td>
+              <td>{{ devedor.vencimento }}</td>
+              <td>
+                <p-tag [value]="devedor.status" [severity]="severityPorStatus(devedor.status)"></p-tag>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="5" class="empty">Nenhum devedor encontrado.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+  </div>
+</section>

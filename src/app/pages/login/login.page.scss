@@ -1,0 +1,55 @@
+.login-container {
+  min-height: 100vh;
+  padding: 1rem;
+}
+
+.login-content {
+  display: grid;
+  grid-template-columns: 18rem 1fr;
+  gap: 1rem;
+  align-items: center;
+}
+
+.modules-menu {
+  position: sticky;
+  top: 1rem;
+}
+
+.form-wrapper {
+  min-height: calc(100vh - 2rem);
+  display: grid;
+  place-items: center;
+}
+
+.login-form {
+  width: min(100%, 24rem);
+  display: grid;
+  gap: 1rem;
+}
+
+.field {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.error {
+  color: var(--p-red-500);
+}
+
+.w-full {
+  width: 100%;
+}
+
+@media (max-width: 960px) {
+  .login-content {
+    grid-template-columns: 1fr;
+  }
+
+  .modules-menu {
+    position: static;
+  }
+
+  .form-wrapper {
+    min-height: auto;
+  }
+}

@@ -1,0 +1,45 @@
+<app-layout-topbar></app-layout-topbar>
+
+<section class="dashboard-container">
+  
+
+  <div class="dashboard-content">
+    <aside class="modules-menu" aria-label="Módulos disponíveis">
+      <app-layout-menu></app-layout-menu>
+    </aside>
+    <div class="main-content">
+
+      <p-toolbar>
+    <ng-template pTemplate="start">
+      <h2 class="title">Dashboard</h2>
+    </ng-template>
+    <ng-template pTemplate="end">
+      <div class="actions">
+        <button pButton label="Sair" icon="pi pi-sign-out" severity="secondary" (click)="logout()"></button>
+      </div>
+    </ng-template>
+  </p-toolbar>
+
+    <div class="cards">
+      @for (metric of metrics; track metric.title) {
+        <p-card>
+          <ng-template pTemplate="title">{{ metric.title }}</ng-template>
+          <p-tag [value]="metric.value" [severity]="metric.severity"></p-tag>
+        </p-card>
+      }
+    </div>
+
+    <p-card>
+      <ng-template pTemplate="title">Percentual de boletos/faturas não pagos após o vencimento</ng-template>
+      <div class="chart-wrapper">
+        <p-chart
+          type="pie"
+          [data]="percentualInadimplencia"
+          [options]="percentualInadimplenciaOptions"
+          ariaLabel="Gráfico em pizza do percentual de boletos e faturas não pagos após vencimento"
+        ></p-chart>
+      </div>
+    </p-card>
+    </div>
+  </div>
+</section>

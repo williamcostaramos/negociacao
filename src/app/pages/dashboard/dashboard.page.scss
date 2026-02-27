@@ -1,0 +1,47 @@
+.dashboard-container {
+  padding: 1rem;
+}
+
+.title {
+  margin: 0;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+.main-content {
+  display: grid;
+  gap: 1rem;
+}
+.dashboard-content {
+  display: grid;
+  grid-template-columns: 18rem 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.modules-menu {
+  position: sticky;
+  top: 1rem;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+
+.chart-wrapper {
+  height: 22rem;
+}
+
+@media (max-width: 960px) {
+  .dashboard-content {
+    grid-template-columns: 1fr;
+  }
+
+  .modules-menu {
+    position: static;
+  }
+}

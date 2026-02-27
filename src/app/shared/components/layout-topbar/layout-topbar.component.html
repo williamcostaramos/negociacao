@@ -1,0 +1,29 @@
+<header class="app-topbar" role="banner" aria-label="Barra superior do sistema">
+  <div class="topbar-left">
+    <span class="brand-icon" aria-hidden="true">
+      <i class="pi pi-prime"></i>
+    </span>
+    <span class="brand-name">Negociation</span>
+  </div>
+
+  <div class="topbar-center">
+    <h1 class="page-title">{{ getPageTitle() }}</h1>
+  </div>
+
+  <div class="topbar-actions" aria-label="Ações rápidas">
+    <button
+      pButton
+      type="button"
+      class="topbar-action"
+      text
+      rounded
+      [icon]="isDarkMode() ? 'pi pi-sun' : 'pi pi-moon'"
+      (click)="toggleTheme()"
+      [attr.aria-label]="isDarkMode() ? 'Alternar para tema claro' : 'Alternar para tema escuro'"
+    ></button>
+    <button pButton type="button" class="topbar-action" text rounded icon="pi pi-cog" aria-label="Configurações"></button>
+    <button pButton type="button" class="topbar-action" text rounded icon="pi pi-bell" aria-label="Notificações"></button>
+    <span class="avatar" aria-label="Usuário logado">U</span>
+    <button pButton type="button" class="topbar-action" text rounded icon="pi pi-bars" aria-label="Menu"></button>
+  </div>
+</header>

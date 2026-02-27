@@ -1,0 +1,44 @@
+<section class="login-container">
+  <div class="login-content">
+  
+    <div class="form-wrapper">
+      <p-card header="Acessar sistema" subheader="Informe suas credenciais">
+        <form [formGroup]="form" (ngSubmit)="submit()" class="login-form" novalidate>
+          <div class="field">
+            <label for="email">E-mail</label>
+            <input
+              id="email"
+              type="email"
+              pInputText
+              formControlName="email"
+              aria-describedby="email-error"
+            />
+            @if (emailInvalid) {
+              <small id="email-error" class="error">Digite um e-mail válido.</small>
+            }
+          </div>
+
+          <div class="field">
+            <label for="password">Senha</label>
+            <p-password
+              inputId="password"
+              formControlName="password"
+              [toggleMask]="true"
+              [feedback]="false"
+              aria-describedby="password-error"
+              styleClass="w-full"
+              inputStyleClass="w-full"
+            />
+            @if (passwordInvalid) {
+              <small id="password-error" class="error"
+                >Senha obrigatória com no mínimo 6 caracteres.</small
+              >
+            }
+          </div>
+
+          <button pButton type="submit" label="Entrar" icon="pi pi-sign-in" class="w-full"></button>
+        </form>
+      </p-card>
+    </div>
+  </div>
+</section>

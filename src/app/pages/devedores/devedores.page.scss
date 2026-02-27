@@ -1,0 +1,59 @@
+.devedores-container {
+  padding: 1rem;
+}
+
+.devedores-content {
+  display: grid;
+  grid-template-columns: 18rem 1fr;
+  gap: 1rem;
+  align-items: start;
+}
+
+.modules-menu {
+  position: sticky;
+  top: 1rem;
+}
+
+.main-content {
+  display: grid;
+  gap: 1rem;
+}
+
+.title {
+  margin: 0;
+}
+
+.cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+
+.metric {
+  margin: 0;
+  font-size: 1.75rem;
+  font-weight: 700;
+}
+
+.search {
+  margin-bottom: 1rem;
+}
+
+.w-full {
+  width: 100%;
+}
+
+.empty {
+  text-align: center;
+  color: var(--p-text-muted-color);
+}
+
+@media (max-width: 960px) {
+  .devedores-content {
+    grid-template-columns: 1fr;
+  }
+
+  .modules-menu {
+    position: static;
+  }
+}

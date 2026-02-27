@@ -1,0 +1,85 @@
+<app-layout-topbar></app-layout-topbar>
+
+<section class="usuarios-container">
+  <div class="usuarios-content">
+    <aside class="modules-menu" aria-label="Módulos disponíveis">
+      <app-layout-menu></app-layout-menu>
+    </aside>
+
+    <div class="main-content">
+      <p-toolbar>
+        <ng-template pTemplate="start">
+          <h2 class="title">Usuários</h2>
+        </ng-template>
+        <ng-template pTemplate="end">
+          <button
+            pButton
+            type="button"
+            label="Voltar"
+            icon="pi pi-arrow-left"
+            severity="secondary"
+            (click)="voltarDashboard()"
+          ></button>
+        </ng-template>
+      </p-toolbar>
+
+      <div class="cards">
+        <p-card>
+          <ng-template pTemplate="title">Total de usuários</ng-template>
+          <p class="metric">{{ totalUsuarios() }}</p>
+        </p-card>
+
+        <p-card>
+          <ng-template pTemplate="title">Usuários ativos</ng-template>
+          <p class="metric">{{ totalAtivos() }}</p>
+        </p-card>
+      </div>
+
+      <p-card>
+        <div class="search">
+          <span class="p-input-icon-left w-full">
+            <i class="pi pi-search"></i>
+            <input
+              #filtroInput
+              pInputText
+              type="text"
+              [value]="filtro()"
+              (input)="atualizarFiltro(filtroInput.value)"
+              placeholder="Buscar por nome, e-mail, perfil ou status"
+              aria-label="Buscar usuários"
+              class="w-full"
+            />
+          </span>
+        </div>
+
+        <p-table [value]="usuariosFiltrados()" [paginator]="true" [rows]="5" [rowsPerPageOptions]="[5, 10, 20]">
+          <ng-template pTemplate="header">
+            <tr>
+              <th>Nome</th>
+              <th>E-mail</th>
+              <th>Perfil</th>
+              <th>Status</th>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="body" let-usuario>
+            <tr>
+              <td>{{ usuario.nome }}</td>
+              <td>{{ usuario.email }}</td>
+              <td>{{ usuario.perfil }}</td>
+              <td>
+                <p-tag [value]="usuario.status" [severity]="severityPorStatus(usuario.status)"></p-tag>
+              </td>
+            </tr>
+          </ng-template>
+
+          <ng-template pTemplate="emptymessage">
+            <tr>
+              <td colspan="4" class="empty">Nenhum usuário encontrado.</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </p-card>
+    </div>
+  </div>
+</section>
