@@ -1,0 +1,157 @@
+<p-toast></p-toast>
+
+<p-dialog
+  header="Cadastro de Cliente"
+  [visible]="visivel()"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '100%', maxWidth: '600px' }"
+  (onHide)="cancelar()"
+  [blockScroll]="true"
+>
+  <form [formGroup]="formulario" (ngSubmit)="salvarCliente()">
+    <div class="form-grid">
+      <!-- Nome -->
+      <div class="form-group">
+        <label for="nome" class="label-required">Nome</label>
+        <input
+          id="nome"
+          type="text"
+          pInputText
+          formControlName="nome"
+          placeholder="Digite o nome completo"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('nome') }"
+          class="w-full"
+        />
+        <small class="error-message" *ngIf="obterMensagemErro('nome')">
+          {{ obterMensagemErro('nome') }}
+        </small>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email" class="label-required">Email</label>
+        <input
+          id="email"
+          type="email"
+          pInputText
+          formControlName="email"
+          placeholder="exemplo@email.com"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('email') }"
+          class="w-full"
+        />
+        <small class="error-message" *ngIf="obterMensagemErro('email')">
+          {{ obterMensagemErro('email') }}
+        </small>
+      </div>
+
+      <!-- Telefone -->
+      <div class="form-group">
+        <label for="telefone" class="label-required">Telefone</label>
+        <p-inputMask
+          id="telefone"
+          mask="(99) 99999-9999"
+          placeholder="(11) 99999-9999"
+          formControlName="telefone"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('telefone') }"
+          styleClass="w-full"
+        />
+        <small class="error-message" *ngIf="obterMensagemErro('telefone')">
+          {{ obterMensagemErro('telefone') }}
+        </small>
+      </div>
+
+      <!-- CEP -->
+      <div class="form-group">
+        <label for="cep">CEP</label>
+        <p-inputMask
+          id="cep"
+          mask="99999-999"
+          placeholder="12345-678"
+          formControlName="cep"
+          styleClass="w-full"
+        />
+      </div>
+
+      <!-- Endereço -->
+      <div class="form-group full-width">
+        <label for="endereco">Endereço</label>
+        <input
+          id="endereco"
+          type="text"
+          pInputText
+          formControlName="endereco"
+          placeholder="Rua, número e complemento"
+          class="w-full"
+        />
+      </div>
+
+      <!-- Cidade -->
+      <div class="form-group">
+        <label for="cidade">Cidade</label>
+        <input
+          id="cidade"
+          type="text"
+          pInputText
+          formControlName="cidade"
+          placeholder="Digite a cidade"
+          class="w-full"
+        />
+      </div>
+
+      <!-- Estado -->
+      <div class="form-group">
+        <label for="estado">Estado</label>
+        <input
+          id="estado"
+          type="text"
+          pInputText
+          formControlName="estado"
+          placeholder="SP, RJ, etc"
+          class="w-full"
+          maxlength="2"
+        />
+      </div>
+
+      <!-- Status -->
+      <div class="form-group">
+        <label for="status" class="label-required">Status</label>
+        <p-select
+          inputId="status"
+          formControlName="status"
+          [options]="statusOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Selecione um status"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('status') }"
+          styleClass="w-full"
+        />
+      </div>
+    </div>
+  </form>
+
+  <!-- Botões -->
+  <ng-template pTemplate="footer">
+    <div class="form-actions">
+      <button
+        pButton
+        type="button"
+        label="Cancelar"
+        class="p-button-secondary"
+        (click)="cancelar()"
+        [disabled]="carregando()"
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Salvar Cliente"
+        class="p-button-success"
+        [loading]="carregando()"
+        [disabled]="formulario.invalid || carregando()"
+        (click)="salvarCliente()"
+      ></button>
+    </div>
+  </ng-template>
+</p-dialog>

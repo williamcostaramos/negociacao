@@ -1,0 +1,134 @@
+<p-toast></p-toast>
+
+<p-dialog
+  header="Cadastro de Devedor"
+  [visible]="visivel()"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '100%', maxWidth: '600px' }"
+  (onHide)="cancelar()"
+  [blockScroll]="true"
+>
+  <form [formGroup]="formulario" (ngSubmit)="salvarDevedor()">
+    <div class="form-grid">
+      <!-- Nome -->
+      <div class="form-group full-width">
+        <label for="nome" class="label-required">Nome</label>
+        <input
+          id="nome"
+          type="text"
+          pInputText
+          formControlName="nome"
+          placeholder="Nome do devedor"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('nome') }"
+          class="w-full"
+        />
+        <small class="error-message" *ngIf="obterMensagemErro('nome')">
+          {{ obterMensagemErro('nome') }}
+        </small>
+      </div>
+
+      <!-- Documento -->
+      <div class="form-group">
+        <label for="documento" class="label-required">Documento (CPF/CNPJ)</label>
+        <input
+          id="documento"
+          type="text"
+          pInputText
+          formControlName="documento"
+          placeholder="000.000.000-00 ou 00.000.000/0001-00"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('documento') }"
+          class="w-full"
+        />
+        <small class="error-message" *ngIf="obterMensagemErro('documento')">
+          {{ obterMensagemErro('documento') }}
+        </small>
+      </div>
+
+      <!-- Valor -->
+      <div class="form-group">
+        <label for="valor" class="label-required">Valor</label>
+        <p-inputNumber
+          id="valor"
+          formControlName="valor"
+          [currency]="'BRL'"
+          locale="pt-BR"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('valor') }"
+          styleClass="w-full"
+        />
+        <small class="error-message" *ngIf="obterMensagemErro('valor')">
+          {{ obterMensagemErro('valor') }}
+        </small>
+      </div>
+
+      <!-- Vencimento -->
+      <div class="form-group">
+        <label for="vencimento" class="label-required">Data de Vencimento</label>
+        <p-inputMask
+          id="vencimento"
+          mask="99/99/9999"
+          placeholder="DD/MM/AAAA"
+          formControlName="vencimento"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('vencimento') }"
+          styleClass="w-full"
+        />
+        <small class="error-message" *ngIf="obterMensagemErro('vencimento')">
+          {{ obterMensagemErro('vencimento') }}
+        </small>
+      </div>
+
+      <!-- Status -->
+      <div class="form-group full-width">
+        <label for="status" class="label-required">Status</label>
+        <p-select
+          inputId="status"
+          formControlName="status"
+          [options]="statusOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Selecione um status"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('status') }"
+          styleClass="w-full"
+        />
+      </div>
+
+      <!-- Observações -->
+      <div class="form-group full-width">
+        <label for="observacoes">Observações</label>
+        <textarea
+          id="observacoes"
+          pInputText
+          formControlName="observacoes"
+          placeholder="Adicione observações sobre o devedor"
+          class="w-full textarea"
+          rows="3"
+        ></textarea>
+      </div>
+    </div>
+  </form>
+
+  <!-- Botões -->
+  <ng-template pTemplate="footer">
+    <div class="form-actions">
+      <button
+        pButton
+        type="button"
+        label="Cancelar"
+        class="p-button-secondary"
+        (click)="cancelar()"
+        [disabled]="carregando()"
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Salvar Devedor"
+        class="p-button-success"
+        [loading]="carregando()"
+        [disabled]="formulario.invalid || carregando()"
+        (click)="salvarDevedor()"
+      ></button>
+    </div>
+  </ng-template>
+</p-dialog>

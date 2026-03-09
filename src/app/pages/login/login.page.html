@@ -1,6 +1,5 @@
 <section class="login-container">
   <div class="login-content">
-  
     <div class="form-wrapper">
       <p-card header="Acessar sistema" subheader="Informe suas credenciais">
         <form [formGroup]="form" (ngSubmit)="submit()" class="login-form" novalidate>
@@ -26,8 +25,7 @@
               [toggleMask]="true"
               [feedback]="false"
               aria-describedby="password-error"
-              styleClass="w-full"
-              inputStyleClass="w-full"
+              class="w-full"
             />
             @if (passwordInvalid) {
               <small id="password-error" class="error"

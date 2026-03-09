@@ -1,0 +1,121 @@
+<p-toast></p-toast>
+
+<p-dialog
+  header="Cadastro de Usuário"
+  [visible]="visivel()"
+  [modal]="true"
+  [closable]="true"
+  [draggable]="false"
+  [resizable]="false"
+  [style]="{ width: '100%', maxWidth: '600px' }"
+  (onHide)="cancelar()"
+  [blockScroll]="true"
+>
+  <form [formGroup]="formulario" (ngSubmit)="salvarUsuario()">
+    <div class="form-grid">
+      <!-- Nome -->
+      <div class="form-group full-width">
+        <label for="nome" class="label-required">Nome</label>
+        <input
+          id="nome"
+          type="text"
+          pInputText
+          formControlName="nome"
+          placeholder="Nome completo do usuário"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('nome') }"
+          class="w-full"
+        />
+        <small class="error-message" *ngIf="obterMensagemErro('nome')">
+          {{ obterMensagemErro('nome') }}
+        </small>
+      </div>
+
+      <!-- Email -->
+      <div class="form-group full-width">
+        <label for="email" class="label-required">Email</label>
+        <input
+          id="email"
+          type="email"
+          pInputText
+          formControlName="email"
+          placeholder="usuario@negociation.com"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('email') }"
+          class="w-full"
+        />
+        <small class="error-message" *ngIf="obterMensagemErro('email')">
+          {{ obterMensagemErro('email') }}
+        </small>
+      </div>
+
+      <!-- Senha -->
+      <div class="form-group">
+        <label for="senha" class="label-required">Senha</label>
+        <p-password
+          inputId="senha"
+          formControlName="senha"
+          [toggleMask]="true"
+          [feedback]="false"
+          placeholder="Mínimo 6 caracteres"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('senha') }"
+          styleClass="w-full"
+        />
+        <small class="error-message" *ngIf="obterMensagemErro('senha')">
+          {{ obterMensagemErro('senha') }}
+        </small>
+      </div>
+
+      <!-- Perfil -->
+      <div class="form-group">
+        <label for="perfil" class="label-required">Perfil</label>
+        <p-select
+          inputId="perfil"
+          formControlName="perfil"
+          [options]="perfilOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Selecione um perfil"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('perfil') }"
+          styleClass="w-full"
+        />
+      </div>
+
+      <!-- Status -->
+      <div class="form-group">
+        <label for="status" class="label-required">Status</label>
+        <p-select
+          inputId="status"
+          formControlName="status"
+          [options]="statusOptions"
+          optionLabel="label"
+          optionValue="value"
+          placeholder="Selecione um status"
+          [ngClass]="{ 'ng-invalid': verificarCampoInvalido('status') }"
+          styleClass="w-full"
+        />
+      </div>
+    </div>
+  </form>
+
+  <!-- Botões -->
+  <ng-template pTemplate="footer">
+    <div class="form-actions">
+      <button
+        pButton
+        type="button"
+        label="Cancelar"
+        class="p-button-secondary"
+        (click)="cancelar()"
+        [disabled]="carregando()"
+      ></button>
+      <button
+        pButton
+        type="button"
+        label="Salvar Usuário"
+        class="p-button-success"
+        [loading]="carregando()"
+        [disabled]="formulario.invalid || carregando()"
+        (click)="salvarUsuario()"
+      ></button>
+    </div>
+  </ng-template>
+</p-dialog>

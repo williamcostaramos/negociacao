@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { ChangeDetectionStrategy, Component, computed, inject, signal } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
 import { Router } from '@angular/router';
 import { ButtonModule } from 'primeng/button';
 import { CardModule } from 'primeng/card';
@@ -9,17 +9,12 @@ import { TagModule } from 'primeng/tag';
 import { ToolbarModule } from 'primeng/toolbar';
 import { LayoutMenuComponent } from '../../shared/components/layout-menu/layout-menu.component';
 import { LayoutTopbarComponent } from '../../shared/components/layout-topbar/layout-topbar.component';
-
-interface Usuario {
-  nome: string;
-  email: string;
-  perfil: 'Administrador' | 'Operador' | 'Leitura';
-  status: 'Ativo' | 'Inativo';
-}
+import { CriarUsuarioModal } from './criar-usuario/criar-usuario.page';
+import { Usuario } from '../../core/services/usuario.service';
 
 @Component({
   selector: 'app-usuarios-page',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  standalone: true,
   imports: [
     CommonModule,
     ToolbarModule,
@@ -30,6 +25,7 @@ interface Usuario {
     InputTextModule,
     LayoutMenuComponent,
     LayoutTopbarComponent,
+    CriarUsuarioModal,
   ],
   templateUrl: './usuarios.page.html',
   styleUrl: './usuarios.page.scss',
@@ -38,6 +34,7 @@ export class UsuariosPage {
   private readonly router = inject(Router);
 
   protected readonly filtro = signal('');
+  protected readonly exibirModalCriar = signal(false);
 
   protected readonly usuarios = signal<Usuario[]>([
     {
@@ -93,5 +90,22 @@ export class UsuariosPage {
 
   protected severityPorStatus(status: Usuario['status']): 'success' | 'contrast' {
     return status === 'Ativo' ? 'success' : 'contrast';
+  }
+
+  protected abrirModalCriar(): void {
+    this.exibirModalCriar.set(true);
+  }
+
+  protected fecharModalCriar(): void {
+    this.exibirModalCriar.set(false);
+  }
+
+  protected adicionarNovoUsuario(usuario: Usuario): void {
+    const novoUsuario: Usuario = {
+      ...usuario,
+      status: (usuario.status as string) as 'Ativo' | 'Inativo',
+      perfil: (usuario.perfil as string) as 'Administrador' | 'Operador' | 'Leitura',
+    };
+    this.usuarios.update((usuarios) => [...usuarios, novoUsuario]);
   }
 }

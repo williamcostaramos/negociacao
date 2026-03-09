@@ -1,28 +1,26 @@
 .login-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   min-height: 100vh;
   padding: 1rem;
+  background: linear-gradient(135deg, var(--primary-color, #3b82f6) 0%, var(--primary-700, #1e40af) 100%);
 }
 
 .login-content {
-  display: grid;
-  grid-template-columns: 18rem 1fr;
-  gap: 1rem;
+  width: 100%;
+  display: flex;
   align-items: center;
-}
-
-.modules-menu {
-  position: sticky;
-  top: 1rem;
+  justify-content: center;
 }
 
 .form-wrapper {
-  min-height: calc(100vh - 2rem);
-  display: grid;
-  place-items: center;
+  width: 100%;
+  max-width: 400px;
 }
 
 .login-form {
-  width: min(100%, 24rem);
+  width: 100%;
   display: grid;
   gap: 1rem;
 }
@@ -30,6 +28,38 @@
 .field {
   display: grid;
   gap: 0.5rem;
+  position: relative;
+}
+
+.field :deep(.p-password) {
+  position: relative;
+
+  .p-password-input {
+    padding-right: 2.5rem;
+  }
+
+  .p-password-panel {
+    display: none;
+  }
+
+  .p-password-hidden-icon,
+  .p-password-show-icon {
+    position: absolute;
+    right: 0.75rem;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 2rem;
+    height: 2rem;
+    color: var(--text-color, #333);
+
+    &:hover {
+      color: var(--primary-color, #3b82f6);
+    }
+  }
 }
 
 .error {
@@ -40,16 +70,12 @@
   width: 100%;
 }
 
-@media (max-width: 960px) {
-  .login-content {
-    grid-template-columns: 1fr;
-  }
-
-  .modules-menu {
-    position: static;
+@media (max-width: 640px) {
+  .login-container {
+    padding: 1rem;
   }
 
   .form-wrapper {
-    min-height: auto;
+    max-width: 100%;
   }
 }

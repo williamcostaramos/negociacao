@@ -15,6 +15,14 @@
           <button
             pButton
             type="button"
+            label="Novo Usuário"
+            icon="pi pi-plus"
+            severity="success"
+            (click)="abrirModalCriar()"
+          ></button>
+          <button
+            pButton
+            type="button"
             label="Voltar"
             icon="pi pi-arrow-left"
             severity="secondary"
@@ -83,3 +91,10 @@
     </div>
   </div>
 </section>
+
+<app-criar-usuario-modal
+  *ngIf="exibirModalCriar()"
+  [exibirModal]="exibirModalCriar()"
+  (fechar)="fecharModalCriar()"
+  (usuarioCriado)="adicionarNovoUsuario($event)"
+></app-criar-usuario-modal>

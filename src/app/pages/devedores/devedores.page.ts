@@ -9,17 +9,12 @@ import { TagModule } from 'primeng/tag';
 import { ToolbarModule } from 'primeng/toolbar';
 import { LayoutMenuComponent } from '../../shared/components/layout-menu/layout-menu.component';
 import { LayoutTopbarComponent } from '../../shared/components/layout-topbar/layout-topbar.component';
-
-interface Devedor {
-  nome: string;
-  documento: string;
-  valor: number;
-  vencimento: string;
-  status: 'Em atraso' | 'Negociando' | 'Quitado';
-}
+import { CriarDevedorModal } from './criar-devedor/criar-devedor.page';
+import { Devedor } from '../../core/services/devedor.service';
 
 @Component({
   selector: 'app-devedores-page',
+  standalone: true,
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
@@ -32,6 +27,7 @@ interface Devedor {
     LayoutMenuComponent,
     LayoutTopbarComponent,
     CurrencyPipe,
+    CriarDevedorModal,
   ],
   templateUrl: './devedores.page.html',
   styleUrl: './devedores.page.scss',
@@ -40,6 +36,7 @@ export class DevedoresPage {
   private readonly router = inject(Router);
 
   protected readonly filtro = signal('');
+  protected readonly exibirModalCriar = signal(false);
 
   protected readonly devedores = signal<Devedor[]>([
     {
@@ -100,6 +97,22 @@ export class DevedoresPage {
 
   protected voltarDashboard(): void {
     void this.router.navigate(['/dashboard']);
+  }
+
+  protected abrirModalCriar(): void {
+    this.exibirModalCriar.set(true);
+  }
+
+  protected fecharModalCriar(): void {
+    this.exibirModalCriar.set(false);
+  }
+
+  protected adicionarNovoDevedor(devedor: Devedor): void {
+    const novoDevedor: Devedor = {
+      ...devedor,
+      status: (devedor.status as string) as 'Em atraso' | 'Negociando' | 'Quitado',
+    };
+    this.devedores.update((devedores) => [...devedores, novoDevedor]);
   }
 
   protected severityPorStatus(status: Devedor['status']): 'danger' | 'warn' | 'success' {

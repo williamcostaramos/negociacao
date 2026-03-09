@@ -1,5 +1,10 @@
 {
   "dependencies": {
     "@primeng/mcp": "21.1.1"
+  },
+  "_npx": {
+    "packages": [
+      "@primeng/mcp"
+    ]
   }
 }

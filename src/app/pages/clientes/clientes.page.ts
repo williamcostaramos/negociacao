@@ -10,13 +10,8 @@ import { TagModule } from 'primeng/tag';
 import { ToolbarModule } from 'primeng/toolbar';
 import { LayoutMenuComponent } from '../../shared/components/layout-menu/layout-menu.component';
 import { LayoutTopbarComponent } from '../../shared/components/layout-topbar/layout-topbar.component';
-
-interface Cliente {
-  nome: string;
-  email: string;
-  telefone: string;
-  status: 'Ativo' | 'Inativo';
-}
+import { CriarClienteModal } from './criar-cliente/criar-cliente.page';
+import { Cliente } from '../../core/services/cliente.service';
 
 @Component({
   selector: 'app-clientes-page',
@@ -32,12 +27,14 @@ interface Cliente {
     InputTextModule,
     LayoutMenuComponent,
     LayoutTopbarComponent,
+    CriarClienteModal,
   ],
   templateUrl: './clientes.page.html',
   styleUrl: './clientes.page.scss',
 })
 export class ClientesPage {
   protected readonly filtro = signal('');
+  protected readonly exibirModalCriar = signal(false);
 
   protected readonly clientesPorMes = {
     labels: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun'],
@@ -111,5 +108,21 @@ export class ClientesPage {
 
   protected voltarDashboard(): void {
     void this.router.navigate(['/dashboard']);
+  }
+
+  protected abrirModalCriar(): void {
+    this.exibirModalCriar.set(true);
+  }
+
+  protected fecharModalCriar(): void {
+    this.exibirModalCriar.set(false);
+  }
+
+  protected adicionarNovoCliente(cliente: Cliente): void {
+    const novoCliente: Cliente = {
+      ...cliente,
+      status: (cliente.status as string) === 'Ativo' ? 'Ativo' : 'Inativo',
+    };
+    this.clientes.update((clientes) => [...clientes, novoCliente]);
   }
 }
